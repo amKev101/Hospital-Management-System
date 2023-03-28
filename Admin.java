@@ -1,0 +1,1324 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hospital.management.system;
+
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+/**
+ *
+ * @author Mukuria
+ */
+public final class Admin extends javax.swing.JFrame {
+    PreparedStatement prs=null;
+     ResultSet rlts=null;
+   private JFrame frame;
+
+    /**
+     * Creates new form Admin
+     */
+    public Admin() {
+        initComponents();
+        show_doctor();
+        show_medicine();
+        show_patient();
+    }
+    public Connection getConnection ()
+   { 
+       Connection con = null;
+       
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost/hospital","root","");
+             return con;
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            
+            return null;
+        }
+   }
+    public ArrayList<Pat> getpatientList(){
+     ArrayList<Pat> patientList= new ArrayList<> ();
+     Connection conn=getConnection();
+      String query="SELECT * FROM patient";
+     try{
+    
+    Statement St=conn.createStatement(); 
+    ResultSet rs=St.executeQuery(query);
+    Pat patient;
+    while(rs.next()){
+    patient=new Pat(rs.getString("Firstname"),rs.getString("Surname"),rs.getInt("IDNo"),rs.getString("email"),rs.getInt("Phone_No"));
+   patientList.add(patient);
+  }
+  }
+      catch(Exception e){
+        e.printStackTrace();
+} 
+       return patientList; 
+ }
+  public void show_patient(){
+        ArrayList<Pat> list=getpatientList();
+        DefaultTableModel model=(DefaultTableModel)PatientTable.getModel();
+       Object[] row=new Object[5];
+       for(int i=0;i<list.size();i++){
+        row[0]=list.get(i).getFirstname();
+        row[1]=list.get(i).getSurname();
+        row[2]=list.get(i).getIDNO();
+        row[3]=list.get(i).getemail();
+        row[4]=list.get(i).getPhone_No();
+        
+        
+        model.addRow(row);
+       }
+    }
+    
+     public ArrayList<Med>getMedList(){
+     ArrayList<Med> medList= new ArrayList<> ();
+     Connection conn=getConnection();
+      String query="SELECT * FROM medicine";
+     try{
+    
+    Statement St=conn.createStatement(); 
+    ResultSet rs=St.executeQuery(query);
+    Med medicine;
+    while(rs.next()){
+    medicine=new Med(rs.getString("Name"),rs.getString("Ref"),rs.getInt("Dose"),rs.getString("Exp"),rs.getString("Effects"),rs.getString("Machine"),rs.getString("Using"),rs.getString("Storage"));
+    medList.add(medicine);
+  }
+  }
+      catch(Exception e){
+        e.printStackTrace();
+} 
+       return medList; 
+ }
+  public void show_medicine(){
+        ArrayList<Med> list=getMedList();
+        DefaultTableModel model=(DefaultTableModel)MedTable.getModel();
+       Object[] row=new Object[8];
+       for(int i=0;i<list.size();i++){
+        row[0]=list.get(i).getName();
+        row[1]=list.get(i).getRef();
+        row[2]=list.get(i).getDose();
+        row[3]=list.get(i).getExp();
+        row[4]=list.get(i).geteffects();
+        row[5]=list.get(i).getMachine();
+        row[6]=list.get(i).getUsing();
+        row[7]=list.get(i).getStorage();
+       
+        
+        
+        model.addRow(row);
+       }
+    }
+    public ArrayList<Doc> getdoctorList(){
+     ArrayList<Doc> doctorList= new ArrayList<> ();
+     Connection conn=getConnection();
+      String query="SELECT * FROM doctor";
+     try{
+    
+    Statement St=conn.createStatement(); 
+    ResultSet rs=St.executeQuery(query);
+    Doc doctor;
+    while(rs.next()){
+    doctor=new Doc(rs.getString("Firstname"),rs.getString("Surname"),rs.getInt("IDNo"),rs.getString("email"),rs.getInt("Phone_No"));
+    doctorList.add(doctor);
+  }
+  }
+      catch(Exception e){
+        e.printStackTrace();
+} 
+       return doctorList; 
+ }
+  public void show_doctor(){
+        ArrayList<Doc> list=getdoctorList();
+        DefaultTableModel model=(DefaultTableModel)DocTable.getModel();
+       Object[] row=new Object[5];
+       for(int i=0;i<list.size();i++){
+        row[0]=list.get(i).getFirstname();
+        row[1]=list.get(i).getSurname();
+        row[2]=list.get(i).getIDNO();
+        row[3]=list.get(i).getemail();
+        row[4]=list.get(i).getPhone_No();
+        
+        
+        model.addRow(row);
+       }
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        Seffects = new javax.swing.JTextField();
+        Exp = new javax.swing.JTextField();
+        Tname = new javax.swing.JTextField();
+        Ref = new javax.swing.JTextField();
+        Dosage = new javax.swing.JTextField();
+        storage = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jLabel34 = new javax.swing.JLabel();
+        machine = new javax.swing.JTextField();
+        jLabel35 = new javax.swing.JLabel();
+        use = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        MedTable = new javax.swing.JTable();
+        jButton13 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        surname = new javax.swing.JTextField();
+        IDNo = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
+        phone = new javax.swing.JTextField();
+        firstname = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        DocTable = new javax.swing.JTable();
+        jButton11 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        sname = new javax.swing.JTextField();
+        idno = new javax.swing.JTextField();
+        mail = new javax.swing.JTextField();
+        contacts = new javax.swing.JTextField();
+        fname = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        PatientTable = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTabbedPane1.setBackground(new java.awt.Color(153, 255, 255));
+        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(1360, 700));
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
+
+        jPanel2.setBackground(new java.awt.Color(51, 204, 0));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1380, 800));
+
+        jPanel6.setBackground(new java.awt.Color(51, 204, 0));
+        jPanel6.setPreferredSize(new java.awt.Dimension(1380, 800));
+        jPanel6.setLayout(null);
+
+        jPanel1.setBackground(new java.awt.Color(51, 204, 0));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1380, 800));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel25.setText("Reference No");
+        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, -1, -1));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel26.setText("Dose(mg)");
+        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, -1, -1));
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel29.setText("Exp Date");
+        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, -1, -1));
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel31.setText("Side Effects");
+        jPanel1.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel33.setText("Storage Advice");
+        jPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, -1, -1));
+
+        jLabel38.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel38.setText("Name of Tablet");
+        jPanel1.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
+        jPanel1.add(Seffects, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 320, 130, -1));
+        jPanel1.add(Exp, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 130, -1));
+
+        Tname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TnameActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Tname, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 130, -1));
+
+        Ref.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Ref, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 130, -1));
+        jPanel1.add(Dosage, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 130, -1));
+
+        storage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                storageActionPerformed(evt);
+            }
+        });
+        jPanel1.add(storage, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, 130, -1));
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel24.setText("Add Medicine");
+        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 250, 31));
+
+        jButton5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton5.setText("Add");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 510, 90, -1));
+
+        jButton12.setBackground(new java.awt.Color(255, 0, 0));
+        jButton12.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jButton12.setText("logout");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 500, -1, 60));
+
+        jButton7.setBackground(new java.awt.Color(255, 0, 0));
+        jButton7.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jButton7.setText("Exit");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 500, -1, 60));
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel34.setText("Driving and Using Machines");
+        jPanel1.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, -1, -1));
+        jPanel1.add(machine, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 130, -1));
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel35.setText("Usage");
+        jPanel1.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 410, -1, -1));
+        jPanel1.add(use, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 410, 130, -1));
+
+        MedTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name of Tablet", "Reference NO", "Dose(mg)", "Exp", "effects ", "Machines", "Usage", "Storage"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        MedTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MedTableMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(MedTable);
+
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 640, 240));
+
+        jButton13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton13.setText("Remove");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 510, -1, -1));
+
+        jButton17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton17.setText("Update");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 510, -1, -1));
+
+        jPanel6.add(jPanel1);
+        jPanel1.setBounds(0, 0, 1380, 800);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 1380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Add/update/remove medicine", jPanel2);
+
+        jPanel4.setBackground(new java.awt.Color(51, 204, 0));
+
+        jPanel5.setBackground(new java.awt.Color(51, 204, 0));
+        jPanel5.setPreferredSize(new java.awt.Dimension(1380, 800));
+        jPanel5.setLayout(null);
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setText("Phone No");
+        jPanel5.add(jLabel10);
+        jLabel10.setBounds(150, 350, 90, 30);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setText("IdNo");
+        jPanel5.add(jLabel12);
+        jLabel12.setBounds(180, 240, 45, 30);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel13.setText("email");
+        jPanel5.add(jLabel13);
+        jLabel13.setBounds(180, 290, 50, 30);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel14.setText("Firstname");
+        jPanel5.add(jLabel14);
+        jLabel14.setBounds(140, 110, 90, 30);
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel15.setText("Surname");
+        jPanel5.add(jLabel15);
+        jLabel15.setBounds(150, 180, 82, 30);
+
+        surname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                surnameActionPerformed(evt);
+            }
+        });
+        jPanel5.add(surname);
+        surname.setBounds(270, 180, 130, 30);
+
+        IDNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDNoActionPerformed(evt);
+            }
+        });
+        jPanel5.add(IDNo);
+        IDNo.setBounds(270, 240, 130, 30);
+        jPanel5.add(email);
+        email.setBounds(270, 290, 130, 30);
+        jPanel5.add(phone);
+        phone.setBounds(270, 350, 130, 30);
+
+        firstname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstnameActionPerformed(evt);
+            }
+        });
+        jPanel5.add(firstname);
+        firstname.setBounds(270, 110, 130, 30);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel16.setText("Add A Doctor");
+        jPanel5.add(jLabel16);
+        jLabel16.setBounds(144, 54, 250, 31);
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton3.setText("Add");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton3);
+        jButton3.setBounds(150, 430, 90, 37);
+
+        jButton8.setBackground(new java.awt.Color(255, 0, 0));
+        jButton8.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jButton8.setText("Exit");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton8);
+        jButton8.setBounds(1170, 470, 103, 53);
+
+        jButton14.setBackground(new java.awt.Color(255, 0, 0));
+        jButton14.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jButton14.setText("logout");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton14);
+        jButton14.setBounds(930, 470, 149, 53);
+
+        DocTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Firstname", "Surname", "IdNo", "emal", "Phone No"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        DocTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DocTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(DocTable);
+
+        jPanel5.add(jScrollPane2);
+        jScrollPane2.setBounds(590, 50, 700, 250);
+
+        jButton11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton11.setText("Remove");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton11);
+        jButton11.setBounds(420, 430, 130, 37);
+
+        jButton16.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton16.setText("Update");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton16);
+        jButton16.setBounds(270, 430, 120, 37);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 1380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(83, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Add/update/remove doctor", jPanel4);
+
+        jPanel3.setBackground(new java.awt.Color(51, 204, 0));
+        jPanel3.setPreferredSize(new java.awt.Dimension(1380, 800));
+        jPanel3.setLayout(null);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Phone No");
+        jPanel3.add(jLabel2);
+        jLabel2.setBounds(130, 340, 90, 30);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("IdNo");
+        jPanel3.add(jLabel4);
+        jLabel4.setBounds(130, 230, 60, 30);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("email");
+        jPanel3.add(jLabel5);
+        jLabel5.setBounds(130, 280, 100, 30);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setText("Firstname");
+        jPanel3.add(jLabel6);
+        jLabel6.setBounds(130, 110, 100, 30);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel7.setText("Surname");
+        jPanel3.add(jLabel7);
+        jLabel7.setBounds(130, 170, 90, 30);
+
+        sname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                snameActionPerformed(evt);
+            }
+        });
+        jPanel3.add(sname);
+        sname.setBounds(270, 170, 130, 30);
+
+        idno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idnoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(idno);
+        idno.setBounds(270, 230, 130, 30);
+        jPanel3.add(mail);
+        mail.setBounds(270, 280, 130, 30);
+        jPanel3.add(contacts);
+        contacts.setBounds(270, 340, 130, 30);
+
+        fname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fnameActionPerformed(evt);
+            }
+        });
+        jPanel3.add(fname);
+        fname.setBounds(270, 110, 130, 30);
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton1.setText("Add");
+        jButton1.setAlignmentY(0.0F);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1);
+        jButton1.setBounds(110, 450, 79, 37);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel8.setText("Add A Patient");
+        jPanel3.add(jLabel8);
+        jLabel8.setBounds(144, 54, 250, 31);
+
+        jButton9.setBackground(new java.awt.Color(255, 0, 0));
+        jButton9.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jButton9.setText("Exit");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton9);
+        jButton9.setBounds(910, 480, 103, 53);
+
+        jButton15.setBackground(new java.awt.Color(255, 0, 0));
+        jButton15.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jButton15.setText("logout");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton15);
+        jButton15.setBounds(1110, 480, 149, 53);
+
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton6.setText("Remove");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton6);
+        jButton6.setBounds(400, 450, 130, 37);
+
+        jButton10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton10.setText("Update");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton10);
+        jButton10.setBounds(240, 450, 120, 37);
+
+        PatientTable.setAutoCreateRowSorter(true);
+        PatientTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Firstname", "Surname", "IdNo", "emal", "Phone No"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        PatientTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        PatientTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PatientTableMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(PatientTable);
+
+        jPanel3.add(jScrollPane3);
+        jScrollPane3.setBounds(710, 60, 520, 220);
+
+        jTabbedPane1.addTab("Add/update/Remove patient", jPanel3);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1405, 660));
+
+        jPanel7.setBackground(new java.awt.Color(255, 204, 102));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED), "KIM'S HEALTH CENTER", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 48), new java.awt.Color(102, 102, 0))); // NOI18N
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1348, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 558, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 70));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fnameActionPerformed
+
+    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_firstnameActionPerformed
+
+    private void surnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_surnameActionPerformed
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+         String Firstname=firstname.getText();
+         String Surname=surname.getText();
+         String IDNO=IDNo.getText();
+         String Email=email.getText();
+         String Phone=phone.getText();
+         
+          DefaultTableModel model=(DefaultTableModel) DocTable.getModel();
+model.addRow(new Object[]{firstname.getText(),surname.getText(),IDNo.getText(),email.getText(),phone.getText()}); 
+
+        if(Firstname.equals(""))
+         {
+         JOptionPane.showMessageDialog(null,"Enter Doctor's Firstname!");
+         }
+        else if(Surname.equals(""))
+         {
+         JOptionPane.showMessageDialog(null,"Enter Doctor's Surname!");
+         }
+        else if(IDNO.equals(""))
+         {
+         JOptionPane.showMessageDialog(null,"Enter  Doctor's Id number!");
+         }
+         else if(Email.equals(""))
+         {
+         JOptionPane.showMessageDialog(null," Enter  Doctor's email!");
+         }
+         
+        
+         
+         else
+        {
+             int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to add record?","Add Record",JOptionPane.YES_NO_OPTION);
+        if(p==0){
+       
+         
+    try 
+  {
+    Class.forName("com.mysql.jdbc.Driver");
+    String path= "jdbc:mysql://localhost/Hospital";
+    String user="root";
+    String pass="";
+    Connection conn=DriverManager.getConnection(path,user,pass);
+    Statement St=conn.createStatement();
+String query = "INSERT INTO `doctor` (`Firstname`, `Surname`, `IDNo`, `email`, `Phone_No`) VALUES ('"+Firstname+"','"+Surname+"','"+IDNO+"','"+Email+"','"+Phone+"')";
+    St.executeUpdate(query);
+    
+   
+   
+   JOptionPane.showMessageDialog(null,"Record saved successfully");
+  }
+ catch(Exception e)
+{
+  JOptionPane.showMessageDialog(null,"Error In Connection!");
+}  
+       }
+    }//GEN-LAST:event_jButton3ActionPerformed
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         String Firstname=fname.getText();
+         String Surname=sname.getText();
+         String IDNO=idno.getText();
+         String Email=mail.getText();
+         String Phone=contacts.getText();
+         
+         
+        if(Firstname.equals(""))
+         {
+         JOptionPane.showMessageDialog(null,"Enter Patient's Firstname!");
+         }
+        else if(Surname.equals(""))
+         {
+         JOptionPane.showMessageDialog(null,"Enter Patient's Surname!");
+         }
+        else if(IDNO.equals(""))
+         {
+         JOptionPane.showMessageDialog(null,"Enter Patient's Id number!");
+         }
+         else if(Phone.equals(""))
+         {
+         JOptionPane.showMessageDialog(null,"Enter Patient's Phone number!");
+         }
+       
+         
+        
+         
+         else
+        {
+        int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to add record?","Add Record",JOptionPane.YES_NO_OPTION);
+        if(p==0){
+         
+    try 
+  {
+    Class.forName("com.mysql.jdbc.Driver");
+    String path= "jdbc:mysql://localhost/Hospital";
+    String user="root";
+    String pass="";
+    Connection conn=DriverManager.getConnection(path,user,pass);
+    Statement St=conn.createStatement();
+String query = "INSERT INTO `patient` (`Firstname`, `Surname`, `IDNo`, `email`, `Phone_No`) VALUES ('"+Firstname+"','"+Surname+"','"+IDNO+"','"+Email+"','"+Phone+"')";
+    St.executeUpdate(query);
+    
+   
+   
+   JOptionPane.showMessageDialog(null,"Record saved successfully");
+  }
+ catch(Exception e)
+{
+  JOptionPane.showMessageDialog(null,"Error In Connection!");
+}  
+        }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    public void executeUpdate(String query){
+      Connection conn=getConnection();
+      Statement St;
+      try{
+          St=conn.createStatement();
+          if((St.executeUpdate(query))==1);
+        DefaultTableModel model=(DefaultTableModel)DocTable.getModel();
+        model.setRowCount(0);
+        show_doctor();   
+      }
+      catch(Exception ex){
+      ex.printStackTrace();}
+    }
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+         int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
+        if(p==0){
+       
+        setVisible(false);
+        Login ob=new Login();
+        ob.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        // TODO add your handling code here:
+         int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
+        if(p==0){
+       
+        setVisible(false);
+        Login ob=new Login();
+        ob.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+         String Surname=sname.getText();
+         String IDNO=idno.getText();
+         String Email=mail.getText();
+         String Phone=contacts.getText();  
+             try 
+  {
+    Class.forName("com.mysql.jdbc.Driver");
+    String path= "jdbc:mysql://localhost/Hospital";
+    String user="root";
+    String pass="";
+    Connection conn=DriverManager.getConnection(path,user,pass);
+    Statement St=conn.createStatement();
+    String query = "DELETE FROM `patient` WHERE IDNo='"+IDNO+"'";
+    St.executeUpdate(query);
+    JOptionPane.showMessageDialog(null,"successfully removed");
+  }
+ catch(Exception e)
+{
+  JOptionPane.showMessageDialog(null,"Error In Connection!");
+}// TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+         String Surname=sname.getText();
+         String IDNO=idno.getText();
+         String Email=mail.getText();
+         String Phone=contacts.getText();  
+             try 
+  {
+    Class.forName("com.mysql.jdbc.Driver");
+    String path= "jdbc:mysql://localhost/Hospital";
+    String user="root";
+    String pass="";
+    Connection conn=DriverManager.getConnection(path,user,pass);
+    Statement St=conn.createStatement();
+    String sql ="UPDATE patient SET Surname='"+Surname+"',`IDNo`='"+IDNO+"',`email`='"+Email+"',`Phone_No`='"+Phone+"' WHERE `IDNo`='"+IDNO+"'";
+    St.executeUpdate(sql);
+    JOptionPane.showMessageDialog(null,"update successful");
+  }
+ catch(Exception e)
+{
+  JOptionPane.showMessageDialog(null,"Error In Connection!");
+}// TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void idnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idnoActionPerformed
+
+    private void PatientTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PatientTableMouseClicked
+int i=PatientTable.getSelectedRow();
+TableModel model=PatientTable.getModel();
+fname.setText(model.getValueAt(i,0).toString());
+sname.setText(model.getValueAt(i,1).toString());
+idno.setText(model.getValueAt(i,2).toString());
+mail.setText(model.getValueAt(i,3).toString());
+contacts.setText(model.getValueAt(i,4).toString());
+
+// TODO add your handling code here:
+
+    }//GEN-LAST:event_PatientTableMouseClicked
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        String Surname=surname.getText();
+         String IDNO=IDNo.getText();
+         String Email=email.getText();
+         String Phone=phone.getText(); 
+         
+             try 
+  {
+    Class.forName("com.mysql.jdbc.Driver");
+    String path= "jdbc:mysql://localhost/Hospital";
+    String user="root";
+    String pass="";
+    Connection conn=DriverManager.getConnection(path,user,pass);
+    Statement St=conn.createStatement();
+    String query = "DELETE FROM `doctor` WHERE email='"+Email+"'";
+    St.executeUpdate(query);
+    JOptionPane.showMessageDialog(null,"successfully removed");
+  }
+ catch(Exception e)
+{
+  JOptionPane.showMessageDialog(null,"Error In Connection!");
+}
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void DocTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DocTableMouseClicked
+        // TODO add your handling code here:
+        int i=DocTable.getSelectedRow();
+TableModel model=DocTable.getModel();
+firstname.setText(model.getValueAt(i,0).toString());
+surname.setText(model.getValueAt(i,1).toString());
+IDNo.setText(model.getValueAt(i,2).toString());
+email.setText(model.getValueAt(i,3).toString());
+phone.setText(model.getValueAt(i,4).toString());
+    }//GEN-LAST:event_DocTableMouseClicked
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        String TabletName=Tname.getText();
+        String RefNo=Ref.getText();
+        String Dose=Dosage.getText();
+        String Expdate=Exp.getText();
+        String Effect=Seffects.getText();
+        String Machine=machine.getText();
+        String Usage=use.getText();
+        String Storage=storage.getText();
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            String path= "jdbc:mysql://localhost/Hospital";
+            String user="root";
+            String pass="";
+            Connection conn=DriverManager.getConnection(path,user,pass);
+            Statement St=conn.createStatement();
+            String sql ="UPDATE patient SET Surname='"+RefNo+"',`IDNo`='"+Dose+"',`email`='"+Expdate+"',`Phone_No`='"+Effect+"' WHERE `Name`='"+TabletName+"'";
+            St.executeUpdate(sql);
+            JOptionPane.showMessageDialog(null,"update successful");
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,"Error In Connection!");
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        // TODO add your handling code here:
+        String IDNO=Tname.getText();
+
+        try
+        {
+            Class.forName("com.mysql.jdbc.Driver");
+            String path= "jdbc:mysql://localhost/Hospital";
+            String user="root";
+            String pass="";
+            Connection conn=DriverManager.getConnection(path,user,pass);
+            Statement St=conn.createStatement();
+            String query = "DELETE FROM `medicine` WHERE Name='"+IDNO+"'";
+            St.executeUpdate(query);
+            JOptionPane.showMessageDialog(null,"successfully removed");
+        prs.close();
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,"Error In Connection!");
+        }
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void MedTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MedTableMouseClicked
+        // TODO add your handling code here:
+        int i=MedTable.getSelectedRow();
+        TableModel model=MedTable.getModel();
+        Tname.setText(model.getValueAt(i,0).toString());
+        Ref.setText(model.getValueAt(i,1).toString());
+        Dosage.setText(model.getValueAt(i,2).toString());
+        Exp.setText(model.getValueAt(i,3).toString());
+        Seffects.setText(model.getValueAt(i,4).toString());
+        machine.setText(model.getValueAt(i,5).toString());
+        use.setText(model.getValueAt(i,6).toString());
+        storage.setText(model.getValueAt(i,7).toString());
+    }//GEN-LAST:event_MedTableMouseClicked
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        frame=new JFrame();
+        if (JOptionPane.showConfirmDialog(frame,"Confirm That You Want To Exit" ,"From The System",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION) {
+
+        System.exit(0);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+        int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
+        if(p==0){
+       
+        setVisible(false);
+        Login ob=new Login();
+        ob.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        String TabletName=Tname.getText();
+        String RefNo=Ref.getText();
+        String Dose=Dosage.getText();
+        String Expdate=Exp.getText();
+        String Effect=Seffects.getText();
+        String Machine=machine.getText();
+        String Usage=use.getText();
+        String Storage=storage.getText();
+
+        if(TabletName.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Enter Tablet Name!");
+        }
+        else if(RefNo.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Enter Reference Number!");
+        }
+        else if(Dose.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Enter Dosage!");
+        }
+        else if(Expdate.equals(""))
+        {
+            JOptionPane.showMessageDialog(null," Enter The expiry date!");
+        }
+        else if(Effect.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Enter The Tablet side Effect!");
+        }
+        else if(Machine.equals(""))
+        {
+            JOptionPane.showMessageDialog(null," Enter Driving And Using Machine Option!");
+        }
+        else if(Usage.equals(""))
+        {
+            JOptionPane.showMessageDialog(null," How should  the medicine be used!");
+
+        }
+        else if(Storage.equals(""))
+        {
+            JOptionPane.showMessageDialog(null,"Enter storage Advice!");
+        }
+        else
+        { int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to add record?","Add Record",JOptionPane.YES_NO_OPTION);
+            if(p==0){
+
+                try
+                {
+                    Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","");
+                    Statement St=conn.createStatement();
+                    String query = "INSERT INTO `medicine`(`Name`, `Ref`, `Dose`, `Exp`, `Effects`, `Machine`, `Using`, `Storage`)  "
+                            + "VALUES ('"+TabletName+"','"+RefNo+"','"+Dose+"','"+Expdate+"','"+Effect+"','"+Machine+"','"+Usage+"','"+Storage+"')";
+                    St.executeUpdate(query);
+
+                    JOptionPane.showMessageDialog(null,"Record saved successfully");
+                }
+                catch(SQLException | HeadlessException e)
+                {
+                    JOptionPane.showMessageDialog(null,"Error In Connection!");
+                }
+            }
+      }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void storageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_storageActionPerformed
+
+    private void RefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RefActionPerformed
+
+    private void TnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TnameActionPerformed
+
+    private void snameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_snameActionPerformed
+
+    private void IDNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDNoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IDNoActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Admin().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable DocTable;
+    private javax.swing.JTextField Dosage;
+    private javax.swing.JTextField Exp;
+    private javax.swing.JTextField IDNo;
+    private javax.swing.JTable MedTable;
+    private javax.swing.JTable PatientTable;
+    private javax.swing.JTextField Ref;
+    private javax.swing.JTextField Seffects;
+    private javax.swing.JTextField Tname;
+    private javax.swing.JTextField contacts;
+    private javax.swing.JTextField email;
+    private javax.swing.JTextField firstname;
+    private javax.swing.JTextField fname;
+    private javax.swing.JTextField idno;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel3;
+    public javax.swing.JPanel jPanel4;
+    public javax.swing.JPanel jPanel5;
+    public javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField machine;
+    private javax.swing.JTextField mail;
+    private javax.swing.JTextField phone;
+    private javax.swing.JTextField sname;
+    private javax.swing.JTextField storage;
+    private javax.swing.JTextField surname;
+    private javax.swing.JTextField use;
+    // End of variables declaration//GEN-END:variables
+}
